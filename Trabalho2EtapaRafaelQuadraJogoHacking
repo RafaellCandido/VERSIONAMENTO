@@ -1,0 +1,201 @@
+
+programa
+{
+	funcao inicio()
+	{
+      //VARIAVEIS
+      inteiro energiaHacker = 100
+      inteiro defesaIA = 210
+      
+      inteiro opcao = 0
+      inteiro opcaoItem = 0
+      inteiro rodadas = 12
+
+      //ITENS
+      inteiro virusExploit = 2
+      inteiro firewallPessoal = 1
+      inteiro cafeinaTurbo = 2
+      inteiro bombaEMP = 1
+
+      //SISTEMA
+      inteiro nivel = 1
+      inteiro xp = 0
+
+      //CONTROLE
+      logico critico
+      inteiro dano
+
+      escreva("=======HISTORIA=======\n")
+      escreva("Você é o maior CIPHER do mundo terá que lutar contra uma IA corrompida do exercito chamada NEXUS.\nVocê tem 12 partidas para derrota-la, se não, com seu avanço rapido a IA vai alcançar mnissieis nucleares, boa sorte\n\n")
+
+      escreva("=== CIPHER VS NEXUS v1.0 ===\n\n")
+
+      enquanto (energiaHacker > 0 e defesaIA > 0 e rodadas > 0) {
+
+         escreva("\n====================================\n")
+         escreva("ENERGIA: " + energiaHacker + "\n")
+         escreva("DEFESA IA: " + defesaIA + "\n")
+         escreva("NIVEL: " + nivel + " | XP: " + xp + "\n")
+         escreva("RODADAS: " + rodadas + "\n\n")
+
+         escreva("1 - Hackear\n")
+         escreva("2 - Desviar\n")
+         escreva("3 - Mochila\n")
+         escreva("Opcao: ")
+         leia(opcao)
+
+         escolha (opcao) {
+
+            caso 1:
+               dano = sorteia(20, 35) + (nivel * 2)
+
+               //CRITICO
+               se (sorteia(1, 100) <= 20) {
+                  critico = verdadeiro
+                  dano = dano * 2
+               } senao {
+                  critico = falso
+               }
+
+               defesaIA = defesaIA - dano
+
+               escreva("Voce hackeou causando " + dano + " de dano!\n")
+               se (critico) {
+                  escreva("CRITICO! 💥\n")
+               }
+
+               xp = xp + 15
+               pare
+
+            caso 2:
+               escreva("Voce desviou! Menos dano recebido.\n")
+               energiaHacker = energiaHacker - sorteia(5, 10)
+               pare
+
+            caso 3:
+               escreva("MOCHILA\n")
+               escreva("1 - Virus (" + virusExploit + ")\n")
+               escreva("2 - Firewall (" + firewallPessoal + ")\n")
+               escreva("3 - Cafeina (" + cafeinaTurbo + ")\n")
+               escreva("4 - EMP (" + bombaEMP + ")\n")
+               escreva("Opcao:")
+               leia(opcaoItem)
+
+               escolha (opcaoItem) {
+
+                  caso 1:
+                     se (virusExploit > 0) {
+                        dano = sorteia(35, 50)
+                        defesaIA = defesaIA - dano
+                        escreva("Virus causou " + dano + "!\n")
+                        virusExploit = virusExploit - 1
+                        xp = xp + 10
+                     } senao {
+                        escreva("Sem item!\n")
+                     }
+                     pare
+
+                  caso 2:
+                     se (firewallPessoal > 0) {
+                        escreva("Firewall ativo! +20 energia\n")
+                        energiaHacker = energiaHacker + 20
+                        firewallPessoal = firewallPessoal - 1
+                     } senao {
+                        escreva("Sem item!\n")
+                     }
+                     pare
+
+                  caso 3:
+                     se (cafeinaTurbo > 0) {
+                        escreva("Cafeina! +40 energia\n")
+                        energiaHacker = energiaHacker + 40
+                        cafeinaTurbo = cafeinaTurbo - 1
+                     } senao {
+                        escreva("Sem item!\n")
+                     }
+                     pare
+
+                  caso 4:
+                     se (bombaEMP > 0) {
+                        dano = sorteia(50, 70)
+                        defesaIA = defesaIA - dano
+                        escreva("EMP devastador! " + dano + " dano!\n")
+                        bombaEMP = bombaEMP - 1
+                        xp = xp + 20
+                     } senao {
+                        escreva("Sem item!\n")
+                     }
+                     pare
+
+                  caso contrario:
+                     escreva("Opcao invalida!\n")
+               }
+               pare
+
+            caso contrario:
+               escreva("Opcao invalida!\n")
+         }
+
+         //LEVEL UP
+         se (xp >= 50) {
+            nivel = nivel + 1
+            xp = 0
+            escreva("LEVEL UP! Agora nivel " + nivel + " 🚀\n")
+            energiaHacker = energiaHacker + 20
+         }
+
+         //IA MUDA DE FASE
+         se (defesaIA <= 75) {
+            escreva("⚠ NEXUS entrou na FASE 2!\n")
+         }
+
+         //ATAQUE DA IA
+         se (defesaIA > 0) {
+
+            inteiro danoIA
+
+            se (defesaIA > 75) {
+               danoIA = sorteia(10, 20)
+            } senao {
+               danoIA = sorteia(20, 35)
+            }
+
+            escreva("NEXUS ataca causando " + danoIA + "!\n")
+            energiaHacker = energiaHacker - danoIA
+         }
+
+         //LIMITE VIDA
+         se (energiaHacker > 120) {
+            energiaHacker = 120
+         }
+
+         rodadas = rodadas - 1
+      }
+
+      escreva("\n========= RESULTADO FINAL =========\n")
+
+      se (defesaIA <= 0) {
+         escreva("🔥 VITORIA TOTAL!\n")
+         escreva("Voce destruiu a NEXUS e salvou o mundo!\n")
+
+      } senao se (energiaHacker <= 0) {
+         escreva("💀 DERROTA...\n")
+         escreva("A NEXUS dominou tudo.\n")
+
+      } senao {
+         escreva("☢ TEMPO ESGOTADO!\n")
+         escreva("Os misseis foram lancados...\n")
+      }
+	}
+}
+/* $$$ Portugol Studio $$$ 
+ * 
+ * Esta seção do arquivo guarda informações do Portugol Studio.
+ * Você pode apagá-la se estiver utilizando outro editor.
+ * 
+ * @POSICAO-CURSOR = 377; 
+ * @PONTOS-DE-PARADA = ;
+ * @SIMBOLOS-INSPECIONADOS = ;
+ * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
+ * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
+ */
